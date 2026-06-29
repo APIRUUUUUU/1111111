@@ -20,6 +20,7 @@ FetchContent_MakeAvailable(JUCE)
 juce_add_plugin(CrystalVoice
     COMPANY_NAME "VJIDAI"
     BUNDLE_ID "com.vjidai.crystalvoice"
+
     PLUGIN_MANUFACTURER_CODE VjdI
     PLUGIN_CODE CrVo
 
@@ -42,8 +43,6 @@ juce_add_plugin(CrystalVoice
     VST3_CATEGORIES Fx Dynamics Reverb
 )
 
-# PluginProcessor.h / PluginEditor.h 内の
-# #include <JuceHeader.h> 用ヘッダを自動生成する
 juce_generate_juce_header(CrystalVoice)
 
 target_sources(CrystalVoice
@@ -60,6 +59,7 @@ target_compile_definitions(CrystalVoice
         JUCE_USE_CURL=0
         JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_REPORT_APP_USAGE=0
+        JUCE_VST3_CAN_REPLACE_VST2=0
 )
 
 target_link_libraries(CrystalVoice
