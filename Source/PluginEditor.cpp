@@ -1,4 +1,4 @@
-#include "PluginEditor.h"
+include "PluginEditor.h"
 
 namespace
 {
@@ -44,9 +44,14 @@ CrystalVoiceAudioProcessorEditor::CrystalVoiceAudioProcessorEditor (CrystalVoice
     for (auto* slider : { &tune, &harmonyMix, &deEss, &space, &input, &speed, &air, &compression, &delay, &output })
         configureKnob (*slider);
 
-    for (auto* component : { static_cast<juce::Component*> (&factoryPreset), &key, &scale, &harmony,
-                             &tune, &harmonyMix, &deEss, &space, &input, &speed, &air,
-                             &compression, &delay, &output, &details, &savePreset, &loadPreset, &meter })
+    const std::array<juce::Component*, 18> components
+    {
+        &factoryPreset, &key, &scale, &harmony,
+        &tune, &harmonyMix, &deEss, &space, &input, &speed, &air,
+        &compression, &delay, &output, &details, &savePreset, &loadPreset, &meter
+    };
+
+    for (auto* component : components)
         addAndMakeVisible (*component);
 
     details.setToggleState (false, juce::dontSendNotification);
@@ -258,7 +263,12 @@ void CrystalVoiceAudioProcessorEditor::timerCallback()
 void CrystalVoiceAudioProcessorEditor::updateDetailVisibility()
 {
     const bool visible = details.getToggleState();
-    for (auto* control : { static_cast<juce::Component*> (&input), &speed, &air, &compression, &delay, &output })
+    const std::array<juce::Component*, 6> advancedControls
+    {
+        &input, &speed, &air, &compression, &delay, &output
+    };
+
+    for (auto* control : advancedControls)
         control->setVisible (visible);
     repaint();
 }
