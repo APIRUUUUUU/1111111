@@ -8,14 +8,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
 
-# The source is intentionally not bundled in this ZIP. CMake downloads the
-# pinned JUCE release the first time the project is configured.
 FetchContent_Declare(
     JUCE
     GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
     GIT_TAG 8.0.12
     GIT_SHALLOW TRUE
 )
+
 FetchContent_MakeAvailable(JUCE)
 
 juce_add_plugin(CrystalVoice
@@ -23,20 +22,29 @@ juce_add_plugin(CrystalVoice
     BUNDLE_ID "com.vjidai.crystalvoice"
     PLUGIN_MANUFACTURER_CODE VjdI
     PLUGIN_CODE CrVo
+
     FORMATS VST3 Standalone
+
     PRODUCT_NAME "Crystal Voice"
     PLUGIN_NAME "Crystal Voice"
     PLUGIN_DESC "Low-latency vocal enhancement and harmony prototype"
     PLUGIN_MANUFACTURER "VJIDAI"
     PLUGIN_VERSION "0.1.0"
+
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT FALSE
+
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
     COPY_PLUGIN_AFTER_BUILD FALSE
+
     VST3_CATEGORIES Fx Dynamics Reverb
 )
+
+# PluginProcessor.h / PluginEditor.h 内の
+# #include <JuceHeader.h> 用ヘッダを自動生成する
+juce_generate_juce_header(CrystalVoice)
 
 target_sources(CrystalVoice
     PRIVATE
@@ -58,6 +66,7 @@ target_link_libraries(CrystalVoice
     PRIVATE
         juce::juce_audio_utils
         juce::juce_dsp
+
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
